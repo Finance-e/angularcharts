@@ -18,7 +18,8 @@ directive('appVersion', ['version',
       restrict: 'EA',
       link: function ($scope, elm, attrs) {
         $scope.$watch('chart', function () {
-           //type var type = $scope.chart.type;
+            
+            if(typeof $scope.chart === 'undefined'){return;}
             var type = $scope.chart.typeName;
             var wrapper = new google.visualization.ChartWrapper({
                 chartType: type,
@@ -27,13 +28,41 @@ directive('appVersion', ['version',
                 containerId: elm[0]
             });
             wrapper.draw();
+            
+            var toggleSeries=function(col){
+                if(typeof $scope.copyData === 'undefined'){$scope.copyData = {};}
+                var remove = false;
+                if(typeof $scope.copyData[col] === 'undefined'){
+                    remove = true;
+                    $scope.copyData[col] = {};
+                }
+                for(var i in $scope.localData){
+                    if(i === '0' || i === '1' ||typeof($scope.localData[i][col]) === 'undefined'){continue;}
+                    if(remove){
+                        $scope.copyData[col][i] = $scope.localData[i][col];
+                        $scope.localData[i][col] = null;
+                    }else{
+                        $scope.localData[i][col] = $scope.copyData[col][i];
+                    }
+                }
+                if(!remove){delete $scope.copyData[col];}
+                if(!$scope.$$phase) { $scope.$digest(); }
+            };
+            
+            var chart = wrapper.getChart();
+            var view = new google.visualization.DataView($scope.chart.data);
+            google.visualization.events.addListener(wrapper, 'select', function() {
+                var selection = chart.getSelection();
+                if(selection.length === 0 || selection[0].row !== null){return;}
+                toggleSeries(selection[0].column);
+            });
         },true);
       }
-   }
+   };
   }).directive('charts', function($window) {
       return {
             restrict: 'EA',
-            template: '<div class="charts"><div g-chart></div><select ng-model="selectedValue" ng-options="c.name for c in chartTypes"></select>{{myselection.name}}</div>',
+            template: '<div class="charts"><select ng-model="selectedValue" ng-options="c.name for c in chartTypes"></select><div g-chart></div></div>',
             replace: true,
             scope: {
                 "localData"   : "=localdata",
@@ -63,6 +92,7 @@ directive('appVersion', ['version',
                         pageSize:10,
                         pagingSymbols:{prev: 'Anterior', next: 'Próximo'},
                         pagingButtonsConfiguration:'auto',
+                        allowHtml: true
                    };
                    if(typeof(scope.animation === 'undefined') || scope.animation === true){
                         options.animation = {
@@ -74,12 +104,20 @@ directive('appVersion', ['version',
                 };
                 
                 var initChart = function(data){
-                    var chart = {};
-                    chart.data     = google.visualization.arrayToDataTable(data);
+                    var chart      = {};
+                    var titles     = data[0];
+                    var types      = data[1];
+                    
+                    chart.data     = new google.visualization.DataTable();
+                    for (var i in titles){
+                        chart.data.addColumn(types[i], titles[i]);
+                    }
+                    chart.data.addRows(data.slice(2));
                     chart.options  = getOptions();
                     chart.typeName = scope.selectedValue.value;
                     scope.chart    = chart;
-                }
+                    if(!scope.$$phase) { scope.$digest(); }
+                };
                 
                 scope.$watch('localData', function (newValue) {
                     initChart(newValue);
@@ -92,7 +130,7 @@ directive('appVersion', ['version',
                 
                 var w = angular.element($window);
                 w.bind('resize',function(){
-                   initChart(scope.localData);
+                    initChart(scope.localData);
                 });
             }
       }

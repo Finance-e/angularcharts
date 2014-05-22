@@ -5,6 +5,7 @@ angular.module('myApp.controllers', []).
   controller('MyCtrl1', ['$scope',function($scope) {
         $scope.dados = [
           ['Year', 'Sales', 'Expenses', 'Lucro'],
+          ['string', 'number', 'number', 'number'],
           ['2004',  1000,      400,   1000-400],
           ['2005',  1170,      460,   1170-460],
           ['2006',  1660,      1120,  1660-1120],
