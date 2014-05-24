@@ -5,15 +5,8 @@ google.setOnLoadCallback(function () {
     angular.bootstrap(document.body, ['myApp']);
 });
 
-angular.module('myApp.directives', []).
-directive('appVersion', ['version',
-  function (version) {
-    return function ($scope, elm, attrs) {
-      elm.text("Angular seed app:" + version);
-    };
-  }
-])
-.directive('gChart',function (){
+angular.module('fangucharts', []).
+directive('gChart',function (){
    return {
       restrict: 'EA',
       link: function ($scope, elm, attrs) {
@@ -46,7 +39,7 @@ directive('appVersion', ['version',
                     }
                 }
                 if(!remove){delete $scope.copyData[col];}
-                if(!$scope.$$phase) { $scope.$digest(); }
+                $scope.$digest();
             };
             
             var chart = wrapper.getChart();
@@ -62,39 +55,36 @@ directive('appVersion', ['version',
   }).directive('charts', function($window) {
       return {
             restrict: 'EA',
-            template: '<div class="charts"><select ng-model="selectedValue" ng-options="c.name for c in chartTypes"></select><div g-chart></div></div>',
+            template: '<div class="charts span12"><div g-chart></div></div>',
             replace: true,
             scope: {
-                "localData"   : "=localdata",
-                "options"     : "=options",
-                "title"       : "@title",
-                'animation'   : "@animation"
+                "localData" : "=localdata",
+                "chartType" : "=type",
+                "options"   : "=options",
+                "title"     : "=title",
+                'animation' : "@animation",
             },
-            link:function(scope,elem,attrs){
-                
-                scope.chartTypes = [
-                    {name:'Linha',value:'LineChart'},
-                    {name:'Barra',value:'BarChart'},
-                    {name:'Coluna',value:'ColumnChart'},
-                    {name:'Pizza',value:'PieChart'},
-                    {name:'Área',value:'AreaChart'},
-                    {name:'Bolha',value:'BubbleChart'},
-                    {name:'Motion',value:'MotionChart'},
-                    {name:'Etapas',value:'SteppedAreaChart'},
-                    {name:'Tabela',value:'Table'},
+            link:function($scope,elem,attrs){
+                $scope.chartTypes = [
+                    'LineChart', 'BarChart','Coluna', 'ColumnChart','PieChart', 'AreaChart','BubbleChart','MotionChart','SteppedAreaChart','Table'
                 ];
-                scope.selectedValue=scope.chartTypes[0]; 
-                
+                if(typeof $scope.chartType === 'undefined'){$scope.chartType = "LineChart";}
                 var getOptions = function(){
                     var options = {
-                        title: scope.title,
+                        title: $scope.title,
                         page:'enable',
                         pageSize:10,
                         pagingSymbols:{prev: 'Anterior', next: 'Próximo'},
                         pagingButtonsConfiguration:'auto',
-                        allowHtml: true
+                        allowHtml: true,
+                        explorer: {
+                            axis: 'horizontal',
+                            keepInBounds: true,
+                            maxZoomIn: 0.25,
+                            maxZoomOut: 1
+                        }
                    };
-                   if(typeof(scope.animation === 'undefined') || scope.animation === true){
+                   if(typeof($scope.animation === 'undefined') || $scope.animation === true){
                         options.animation = {
                           duration: 1000,
                           easing: 'out',
@@ -114,24 +104,24 @@ directive('appVersion', ['version',
                     }
                     chart.data.addRows(data.slice(2));
                     chart.options  = getOptions();
-                    chart.typeName = scope.selectedValue.value;
-                    scope.chart    = chart;
-                    if(!scope.$$phase) { scope.$digest(); }
+                    chart.typeName = $scope.chartType;
+                    $scope.chart   = chart;
                 };
                 
-                scope.$watch('localData', function (newValue) {
+                $scope.$watch('localData', function (newValue) {
                     initChart(newValue);
                 },true);       
                 
-                scope.$watch('selectedValue', function () {
-                    if(typeof (scope.chart) === 'undefined'){return;}
-                    scope.chart.typeName = scope.selectedValue.value;
+                $scope.$watch('chartType', function (newval, oldval) {
+                    if(typeof ($scope.chart) === 'undefined'){return;}
+                    $scope.chart.typeName = $scope.chartType;
                 },true);       
                 
                 var w = angular.element($window);
                 w.bind('resize',function(){
-                    initChart(scope.localData);
+                    initChart($scope.localData);
+                    $scope.$digest();
                 });
             }
-      }
+      };
 });

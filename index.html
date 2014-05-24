@@ -5,36 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Starter Template for Bootstrap</title>
+    <title>Testando</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/starter-template.css" rel="stylesheet">
 
   </head>
 
   <body>
 
 
-    <div class="container">
-        <div ng-controller="MyCtrl1">
+    <div class="container" ng-app="myApp">
+        <div ng-controller="myCtrl">
             <charts
-                title="My Charts"
+                title="title"
+                type="type"
                 localdata="dados"
-                options="options"
             ></charts>
         </div>
     </div>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="lib/common/bootstrap.min.js"></script>
-  <script src="lib/angular/angular.js"></script>
-
-  <script src="lib/common/ui-bootstrap-tpls-0.10.0.js"></script>
-  <script src="lib/angular/angular-route.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/directives.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="lib/common/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="lib/angular/angular-charts.min.js"></script>
+    
+    <!--<script src="prod/fangucharts.min.js"></script>-->
+    <script src="js/directives.js"></script>
+    <script src="js/controllers.js"></script>
   </body>
 </html>
 
