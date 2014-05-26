@@ -65,14 +65,14 @@ directive('gChart',function (){
                 'animation' : "@animation",
             },
             
-            controller:['$scope', '$attrs', '$element',function(s,attrs,elem){
-                s.chartTypes = [
+            controller:['$scope', '$attrs', '$element',function($scope,attrs,elem){
+                $scope.chartTypes = [
                     'LineChart', 'BarChart','Coluna', 'ColumnChart','PieChart', 'AreaChart','BubbleChart','MotionChart','SteppedAreaChart','Table'
                 ];
-                if(typeof s.chartType === 'undefined'){s.chartType = "LineChart";}
+                if(typeof $scope.chartType === 'undefined'){$scope.chartType = "LineChart";}
                 var getOptions = function(){
                     var options = {
-                        title: s.title,
+                        title: $scope.title,
                         page:'enable',
                         pageSize:10,
                         pagingSymbols:{prev: 'Anterior', next: 'Próximo'},
@@ -85,7 +85,7 @@ directive('gChart',function (){
                             maxZoomOut: 1
                         }
                    };
-                   if(typeof(s.animation === 'undefined') || s.animation === true){
+                   if(typeof($scope.animation === 'undefined') || $scope.animation === true){
                         options.animation = {
                           duration: 1000,
                           easing: 'out',
@@ -98,30 +98,37 @@ directive('gChart',function (){
                     var chart      = {};
                     var titles     = data[0];
                     var types      = data[1];
-                    
+                    var dt         = data.slice(2);
                     chart.data     = new google.visualization.DataTable();
                     for (var i in titles){
                         chart.data.addColumn(types[i], titles[i]);
                     }
-                    chart.data.addRows(data.slice(2));
+                    for(var j in dt){
+                        var row = [];
+                        for(var k in dt[j]){
+                            if(types[k] == 'date'){row.push(new Date(dt[j][k]));}
+                            else {row.push(dt[j][k]);}
+                        }
+                        chart.data.addRow(row);
+                    }
                     chart.options  = getOptions();
-                    chart.typeName = s.chartType;
-                    s.chart   = chart;
+                    chart.typeName = $scope.chartType;
+                    $scope.chart   = chart;
                 };
                 
-                s.$watch('localData', function (newValue) {
+                $scope.$watch('localData', function (newValue) {
                     initChart(newValue);
                 },true);       
                 
-                s.$watch('chartType', function (newval, oldval) {
-                    if(typeof (s.chart) === 'undefined'){return;}
-                    s.chart.typeName = s.chartType;
+                $scope.$watch('chartType', function (newval, oldval) {
+                    if(typeof ($scope.chart) === 'undefined'){return;}
+                    $scope.chart.typeName = $scope.chartType;
                 },true);       
                 
                 var w = angular.element($window);
                 w.bind('resize',function(){
-                    initChart(s.localData);
-                    s.$digest();
+                    initChart($scope.localData);
+                    $scope.$digest();
                 });
             }]
       };
