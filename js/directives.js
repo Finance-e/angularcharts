@@ -9,7 +9,7 @@ angular.module('fangucharts', []).
 directive('gChart',function (){
    return {
       restrict: 'EA',
-      link: function ($scope, elm, attrs) {
+      controller: ['$scope', '$attrs', '$element', function ($scope, attrs, elm) {
         $scope.$watch('chart', function () {
             
             if(typeof $scope.chart === 'undefined'){return;}
@@ -50,9 +50,9 @@ directive('gChart',function (){
                 toggleSeries(selection[0].column);
             });
         },true);
-      }
+      }]
    };
-  }).directive('charts', function($window) {
+  }).directive('charts', ['$window', function($window) {
       return {
             restrict: 'EA',
             template: '<div class="charts span12"><div g-chart></div></div>',
@@ -64,14 +64,15 @@ directive('gChart',function (){
                 "title"     : "=title",
                 'animation' : "@animation",
             },
-            link:function($scope,elem,attrs){
-                $scope.chartTypes = [
+            
+            controller:['$scope', '$attrs', '$element',function(s,attrs,elem){
+                s.chartTypes = [
                     'LineChart', 'BarChart','Coluna', 'ColumnChart','PieChart', 'AreaChart','BubbleChart','MotionChart','SteppedAreaChart','Table'
                 ];
-                if(typeof $scope.chartType === 'undefined'){$scope.chartType = "LineChart";}
+                if(typeof s.chartType === 'undefined'){s.chartType = "LineChart";}
                 var getOptions = function(){
                     var options = {
-                        title: $scope.title,
+                        title: s.title,
                         page:'enable',
                         pageSize:10,
                         pagingSymbols:{prev: 'Anterior', next: 'Próximo'},
@@ -84,7 +85,7 @@ directive('gChart',function (){
                             maxZoomOut: 1
                         }
                    };
-                   if(typeof($scope.animation === 'undefined') || $scope.animation === true){
+                   if(typeof(s.animation === 'undefined') || s.animation === true){
                         options.animation = {
                           duration: 1000,
                           easing: 'out',
@@ -104,24 +105,24 @@ directive('gChart',function (){
                     }
                     chart.data.addRows(data.slice(2));
                     chart.options  = getOptions();
-                    chart.typeName = $scope.chartType;
-                    $scope.chart   = chart;
+                    chart.typeName = s.chartType;
+                    s.chart   = chart;
                 };
                 
-                $scope.$watch('localData', function (newValue) {
+                s.$watch('localData', function (newValue) {
                     initChart(newValue);
                 },true);       
                 
-                $scope.$watch('chartType', function (newval, oldval) {
-                    if(typeof ($scope.chart) === 'undefined'){return;}
-                    $scope.chart.typeName = $scope.chartType;
+                s.$watch('chartType', function (newval, oldval) {
+                    if(typeof (s.chart) === 'undefined'){return;}
+                    s.chart.typeName = s.chartType;
                 },true);       
                 
                 var w = angular.element($window);
                 w.bind('resize',function(){
-                    initChart($scope.localData);
-                    $scope.$digest();
+                    initChart(s.localData);
+                    s.$digest();
                 });
-            }
+            }]
       };
-});
+}]);
