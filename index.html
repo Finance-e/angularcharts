@@ -14,7 +14,14 @@
 
 
     <div class="container" ng-app="myApp">
-        <div ng-controller="myCtrl">
+        <div ng-controller="fanguchartCtrl" ng-init="title='Linha';type='LineChart';dados=[
+        ['Year'  , 'Sales' , 'Expenses', 'Lucro'],
+        ['number', 'number', 'number'  , 'number'],
+        [2009    ,  1000   ,  400      ,  1000-400],
+        [2010    ,  1170   ,  460      ,  1170-460],
+        [2011    ,  1660   ,  1120     ,  1660-1120],
+        [2012    ,  1030   ,  540      ,  1030-540]
+    ];">
             <charts
                 title="title"
                 type="type"
@@ -22,6 +29,41 @@
             ></charts>
         </div>
     </div>
+      
+    <div class="container" ng-app="myApp">
+        <div ng-controller="fanguchartCtrl" ng-init="title='Barra';type='BarChart';dados=[
+        ['Year'  , 'Sales' , 'Expenses', 'Lucro'],
+        ['number', 'number', 'number'  , 'number'],
+        [2005    ,  1000   ,  400      ,  1000-400],
+        [2006    ,  1170   ,  460      ,  1170-460],
+        [2007    ,  1660   ,  1120     ,  1660-1120],
+        [2008    ,  1030   ,  540      ,  1030-540]
+    ];">
+            <charts
+                title="title"
+                type="type"
+                localdata="dados"
+            ></charts>
+        </div>
+    </div>
+      
+    <div class="container" ng-app="myApp">
+        <div ng-controller="fanguchartCtrl" ng-init="title='Coluna';type='ColumnChart';dados=[
+        ['Year'  , 'Sales' , 'Expenses', 'Lucro'],
+        ['number', 'number', 'number'  , 'number'],
+        [2005    ,  1000   ,  400      ,  1000-400],
+        [2006    ,  1170   ,  460      ,  1170-460],
+        [2007    ,  1660   ,  1120     ,  1660-1120],
+        [2008    ,  1030   ,  540      ,  1030-540]
+    ];">
+            <charts
+                title="title"
+                type="type"
+                localdata="dados"
+            ></charts>
+        </div>
+    </div>
+      
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -30,7 +72,6 @@
     <script src="lib/common/ui-bootstrap-tpls-0.10.0.js"></script>
     
     <script src="prod/f-angucharts.min.js"></script>
-    <script src="js/controllers.js"></script>
   </body>
 </html>
 

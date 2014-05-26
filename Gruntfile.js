@@ -52,7 +52,7 @@ module.exports = function( grunt ) {
         uglify: {
             prod: {
               files: {
-                'prod/f-angucharts.min.js': ['lib/angular/angular-charts.min.js','js/directives.js']
+                'prod/f-angucharts.min.js': ['lib/angular/angular-charts.min.js','js/directives.js', 'js/controllers.js']
               }
             }
         },
