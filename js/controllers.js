@@ -1,6 +1,4 @@
 'use strict';
 
 /* Controllers */
-angular.module('myApp',['fangucharts']).controller('fanguchartCtrl', ['$scope', function($scope) {
-
-}]);
+angular.module('myApp',['fangucharts']).controller('fanguchartCtrl', ['$scope', function($scope) {}]);
