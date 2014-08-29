@@ -1,0 +1,22 @@
+{
+  "name": "financee-angularcharts",
+  "version": "0.5.1",
+  "authors": [
+    "Thom MF <thom@hat-framework.com>"
+  ],
+  "description": "Changed angularcharts version",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Finance-e/angularcharts",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {}
+}
