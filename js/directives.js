@@ -76,10 +76,9 @@ directive('gChart',function (){
                         pagingButtonsConfiguration:'auto',
                         allowHtml: true,
                         explorer: {
-                            axis: 'horizontal',
-                            keepInBounds: true,
-                            maxZoomIn: 0.25,
-                            maxZoomOut: 1
+                             actions: ["dragToZoom", "rightClickToReset"],
+                             axis: 'horizontal',
+                             keepInBounds: true
                         }
                    };
                 };
