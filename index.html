@@ -16,17 +16,20 @@
         <div ng-controller='fanguchartCtrl' ng-init='
             title="Acessos por Perfil";
             type="LineChart";
-            dados=[["Date","Webmaster","Visitante","Assinante Tempor\u00e1rio","Analista de Informa\u00e7\u00e3o"],["date","number","number","number","number"],["2014-03-20",null,2,1,null],["2014-03-21",null,2,1,null],["2014-03-25",2,null,null,null],["2014-03-26",null,2,1,null],["2014-03-27",1,null,null,null],["2014-03-28",null,null,1,null],["2014-03-29",null,3,1,null],["2014-03-30",1,null,null,null],["2014-03-31",2,null,null,null],["2014-04-01",2,1,null,null],["2014-04-02",null,3,1,null],["2014-04-03",null,1,null,null],["2014-04-04",2,1,null,null],["2014-04-05",1,2,null,null],["2014-04-06",null,null,1,null],["2014-04-07",2,null,null,null],["2014-04-08",2,null,1,null],["2014-04-09",2,null,null,null],["2014-04-10",2,3,null,null],["2014-04-11",null,2,1,null],["2014-04-12",null,2,1,null],["2014-04-13",null,1,null,null],["2014-04-15",1,null,null,null],["2014-04-16",1,null,4,null],["2014-04-17",null,null,2,1],["2014-04-18",1,null,117,null],["2014-04-19",null,2,68,null],["2014-04-20",null,1,40,null],["2014-04-21",null,2,57,null],["2014-04-22",1,null,47,null],["2014-04-23",null,1,35,null],["2014-04-24",2,1,22,null],["2014-04-25",1,null,19,null],["2014-04-26",1,null,12,null],["2014-04-27",1,null,9,null],["2014-04-28",null,null,14,null],["2014-05-01",1,null,4,null],["2014-05-02",1,null,15,null],["2014-05-03",null,null,14,null],["2014-05-04",1,null,13,null],["2014-05-05",2,1,16,null],["2014-05-06",2,null,12,null],["2014-05-07",2,null,15,null],["2014-05-08",2,null,12,null],["2014-05-09",2,null,15,null],["2014-05-10",2,null,8,null],["2014-05-11",null,null,3,null],["2014-05-12",2,1,13,null],["2014-05-13",2,null,8,null],["2014-05-14",2,null,11,null],["2014-05-15",2,null,10,null],["2014-05-16",2,null,5,null],["2014-05-17",2,null,6,null],["2014-05-18",2,null,7,null],["2014-05-19",1,null,11,null],["2014-05-20",2,null,9,null],["2014-05-21",2,null,12,null],["2014-05-22",2,null,9,null],["2014-05-23",1,2,7,null],["2014-05-24",2,1,6,null],["2014-05-25",2,null,6,null],["2014-05-26",2,1,9,null],["2014-05-27",1,null,null,null]];'>
-            <charts title='title' type='type' localdata='dados'></charts>
+            options={"height":500};
+            foo=[];
+            dados=[["data","BBAS3"],["date","number"],["2014-09-03",36.9],["2014-09-04",34.77],["2014-09-05",34.2],["2014-09-08",32.49],["2014-09-09",32.35],["2014-09-10",31.84],["2014-09-11",32.07],["2014-09-12",30.96],["2014-09-16",33.2],["2014-09-17",33.2],["2014-09-18",32.68],["2014-09-19",32.07],["2014-09-22",30.55],["2014-09-23",30.14],["2014-09-24",30],["2014-09-25",28.92],["2014-09-26",29.83],["2014-09-29",27.28],["2014-10-01",25.7],["2014-10-02",25.45],["2014-10-03",26.01],["2014-10-06",29.11],["2014-10-07",30.24],["2014-10-08",30.43],["2014-10-09",31.6],["2014-10-10",30.2],["2014-10-13",33.48],["2014-10-14",33.28],["2014-10-15",32],["2014-10-16",31.16],["2014-10-17",31.99],["2014-10-20",30.14],["2014-10-21",28.1],["2014-10-22",27.45],["2014-10-23",24.95],["2014-10-24",25.75],["2014-10-27",24.4],["2014-10-28",26.15],["2014-10-29",25.46],["2014-10-30",27.25],["2014-10-31",27.73],["2014-11-03",27.37],["2014-11-04",28.75],["2014-11-05",26.47],["2014-11-06",25.35]];
+        '>
+            <charts title='title' type='type' localdata='dados' options='options'></charts>
         </div>
     </div>
     
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-    <script type='text/javascript' src='http://rf/static/js/angular/angucomplete.js'></script>
-    <link rel='stylesheet' type='text/css' href='http://rf/templates/rf/css/plugins/angucomplete.css' media='screen'/>
-    <script type='text/javascript' src='http://rf/plugins/empresa/cotacaoatual/classes/widgets/cotacao/empresaCotacaoApp.js'></script>    
-    <script src="prod/f-angucharts.min.js"></script>
+    <!--<script src="prod/f-angucharts.min.js"></script>-->
+    <script src="js/app.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/controllers.js"></script>
     <script type="text/javascript">angular.bootstrap(document.getElementById("angularcharts_2"),['myApp']);</script>
   </body>
 </html>

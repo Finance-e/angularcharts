@@ -49,7 +49,7 @@ directive('gChart',function (){
       }]
    };
   }).directive('charts', ['$window', function($window) {
-      return {
+        return {
             restrict: 'EA',
             template: '<div class="charts span12"><div g-chart></div></div>',
             replace: true,
@@ -65,10 +65,11 @@ directive('gChart',function (){
                 $scope.chartTypes = [
                     'LineChart', 'BarChart','Coluna', 'ColumnChart','PieChart', 'AreaChart','BubbleChart','MotionChart','SteppedAreaChart','Table'
                 ];
-                if(typeof $scope.chartType === 'undefined'){$scope.chartType = "LineChart";}
-                var getOptions = function(){
-                    var options = {
-                        title: $scope.title,
+                
+                var getDefaultOptions = function(){
+                    //var title = $scope.title;
+                    return {
+                        //title: title,
                         page:'enable',
                         pageSize:10,
                         pagingSymbols:{prev: 'Anterior', next: 'Próximo'},
@@ -81,10 +82,20 @@ directive('gChart',function (){
                             maxZoomOut: 1
                         }
                    };
+                };
+                if(typeof $scope.chartType === 'undefined'){$scope.chartType = "LineChart";}
+                var getOptions = function(){
+                    if(typeof $scope.options === 'undefined'){$scope.options = {};}
+                    var defaultoptions = getDefaultOptions();
+                    var options = $scope.options;
+                    for(var i in defaultoptions){
+                        if(typeof defaultoptions[i] !== 'undefined'){continue;}
+                        options[i] = defaultoptions[i];
+                    }
                    if(typeof($scope.animation === 'undefined') || $scope.animation === true){
-                        options.animation = {
+                        options['animation'] = {
                           duration: 1000,
-                          easing: 'out',
+                          easing: 'out'
                         };
                     }
                     return options;
@@ -95,6 +106,7 @@ directive('gChart',function (){
                     var titles     = data[0];
                     var types      = data[1];
                     var dt         = data.slice(2);
+                    if(dt.length === 0){return;}
                     chart.data     = new google.visualization.DataTable();
                     for (var i in titles){
                         chart.data.addColumn(types[i], titles[i]);
@@ -102,11 +114,16 @@ directive('gChart',function (){
                     for(var j in dt){
                         var row = [];
                         for(var k in dt[j]){
-                            if(types[k] == 'date'){row.push(new Date(dt[j][k]));}
+                            if(types[k] == 'date'){
+                                var date = new Date(dt[j][k]);
+                                date.setDate(date.getDate() + 1);
+                                row.push(date);
+                            }
                             else {row.push(dt[j][k]);}
                         }
                         chart.data.addRow(row);
                     }
+                    
                     chart.options  = getOptions();
                     chart.typeName = $scope.chartType;
                     $scope.chart   = chart;
