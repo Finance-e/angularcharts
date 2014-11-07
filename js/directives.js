@@ -76,9 +76,7 @@ directive('gChart',function (){
                         pagingButtonsConfiguration:'auto',
                         allowHtml: true,
                         explorer: {
-                             actions: ["dragToZoom", "rightClickToReset"],
-                             axis: 'horizontal',
-                             keepInBounds: true
+                             actions: ["dragToZoom", "rightClickToReset"]
                         }
                    };
                 };
