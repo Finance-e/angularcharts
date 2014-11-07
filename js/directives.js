@@ -82,11 +82,12 @@ directive('gChart',function (){
                 };
                 if(typeof $scope.chartType === 'undefined'){$scope.chartType = "LineChart";}
                 var getOptions = function(){
-                    if(typeof $scope.options === 'undefined'){$scope.options = {};}
+                    var opts = {};
+                    if(typeof $scope.options !== 'undefined'){opts = $scope.options;}
                     var defaultoptions = getDefaultOptions();
-                    var options = $scope.options;
+                    var options = opts;
                     for(var i in defaultoptions){
-                        if(typeof defaultoptions[i] !== 'undefined'){continue;}
+                        if(typeof options[i] !== 'undefined'){continue;}
                         options[i] = defaultoptions[i];
                     }
                    if(typeof($scope.animation === 'undefined') || $scope.animation === true){

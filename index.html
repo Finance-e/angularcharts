@@ -12,7 +12,7 @@
 
   <body>
       
-    <div id='angularcharts_2'>
+    <div id='angularcharts_1'>
         <div ng-controller='fanguchartCtrl' ng-init='
             title="Acessos por Perfil";
             type="AreaChart";
@@ -23,6 +23,16 @@
             <charts title='title' type='type' localdata='dados' options='options'></charts>
         </div>
     </div>
+      
+      <div id='angularcharts_2'>
+          <div 
+              ng-controller='fanguchartCtrl' 
+              ng-init='title="Ativos e Patrimônio(R$ - mil)";
+              type="AreaChart";
+              dados=[["Data","Ativo Total","Ativo Circulante","Patrim\u00f4nio L\u00edquido"],["date","number","number","number"],["2001-12-31",75158596,33933154,28966503],["2002-12-31",97260082,38430991,34324906],["2003-12-31",136234363,51869293,49367329],["2004-12-31",147035117,51287418,62271562],["2005-12-31",183521108,60235190,78785236],["2006-12-31",210538129,67219423,97530648],["2007-12-31",231227800,53373766,113854127],["2008-12-31",292163842,63575278,138365282],["2009-12-31",345607250,76674015,159464599],["2010-12-31",519970003,106685162,310223300],["2011-12-31",599149983,121163683,332223611],["2012-12-31",677716287,118101812,345433653],["2013-12-31",752966638,123350379,349333684]];'>
+              <charts title='title' type='type' localdata='dados' ></charts>
+          </div>
+      </div>
     
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
@@ -30,6 +40,7 @@
     <script src="js/app.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/controllers.js"></script>
+    <script type="text/javascript">angular.bootstrap(document.getElementById("angularcharts_1"),['myApp']);</script>
     <script type="text/javascript">angular.bootstrap(document.getElementById("angularcharts_2"),['myApp']);</script>
   </body>
 </html>
