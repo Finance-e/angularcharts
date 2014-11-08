@@ -30,10 +30,6 @@ directive('gChart',function (){
         $scope.$watch('chart', function () {
             if(typeof $scope.chart === 'undefined'){return;}
             var type = $scope.chart.typeName;
-            
-            var formatter = new google.visualization.NumberFormat({negativeColor: 'red'});
-            formatter.format($scope.chart.data, 1);
-            
             var wrapper = new google.visualization.ChartWrapper({
                 chartType: type,
                 dataTable: $scope.chart.data,
@@ -127,6 +123,13 @@ directive('gChart',function (){
                             else {row.push(dt[j][k]);}
                         }
                         chart.data.addRow(row);
+                    }
+                    
+                    var formatter = new google.visualization.NumberFormat({negativeColor: 'red'});
+                    for(var i in types){
+                        if(types[i] === 'number'){
+                            formatter.format(chart.data, parseInt(i));
+                        }
                     }
                     
                     chart.options  = getOptions();
