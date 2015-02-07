@@ -71,11 +71,12 @@ directive('gChart',function (){
                     return {
                         //title: title,
                         page:'enable',
-                        pageSize:10,
                         pagingSymbols:{prev: 'Anterior', next: 'Próximo'},
                         pagingButtonsConfiguration:'auto',
                         allowHtml: true,
                         explorer: {
+                             axis: 'horizontal',
+                             keepInBounds: true,
                              actions: ["dragToZoom", "rightClickToReset"]
                         },
                         NumberFormat:{
@@ -103,6 +104,7 @@ directive('gChart',function (){
                 };
                 
                 var initChart = function(data){
+                    if(typeof data === 'undefined'){return;}
                     var chart      = {};
                     var titles     = data[0];
                     var types      = data[1];
