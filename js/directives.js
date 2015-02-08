@@ -104,7 +104,7 @@ directive('gChart',function (){
                 };
                 
                 var initChart = function(data){
-                    if(typeof data === 'undefined'){return;}
+                    if(typeof data === 'undefined' || typeof data.length === 'undefined'){return;}
                     var chart      = {};
                     var titles     = data[0];
                     var types      = data[1];
